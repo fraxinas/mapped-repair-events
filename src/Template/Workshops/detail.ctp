@@ -28,6 +28,10 @@ if (!$this->request->getSession()->read('isMobile')) {
                 echo '<a class="btn edit" href="'.$this->Html->urlWorkshopEdit($workshop->uid).'">
                         <button class="btn" type="submit" >
                         ' . __('Edit Repair Initiative') . '
+                        </button></a>
+                      <a class="btn orga" href="'.$this->Html->urlWorkshopOrganize($workshop->uid).'">
+                        <button class="btn" type="submit" >
+                        ' . __('Organize Repair Initiative') . '
                         </button></a>';
             }
         ?>

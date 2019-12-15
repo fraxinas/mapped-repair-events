@@ -2438,6 +2438,44 @@ CREATE TABLE `workshops_categories` (
   `category_id` int(8) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `workshops_orgatool`
+--
+
+DROP TABLE IF EXISTS `workshops_orgatool`;
+CREATE TABLE `workshops_orgatool` (
+  `workshop_uid` int(8) UNSIGNED NOT NULL,
+  `workshops_orgatool_id` int(8) UNSIGNED NOT NULL,
+  `enabled` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `helper_invitation_days` smallint(6) NOT NULL DEFAULT '14',
+  `helper_reminder_days` smallint(6) NOT NULL DEFAULT '5',
+  `helper_invitation_text` text NOT NULL,
+  `helper_reminder_text` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `workshops_orgatool`
+  ADD PRIMARY KEY (`workshops_orgatool_id`);
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `workshops_orgatool_users`
+--
+
+DROP TABLE IF EXISTS `workshops_orgatool_users`;
+CREATE TABLE `workshops_orgatool_users` (
+  `workshops_orgatool_id` int(8) UNSIGNED NOT NULL,
+  `workshops_orgatool_users_id` int(8) UNSIGNED NOT NULL,
+  `user_uid` int(8) NOT NULL,
+  `event_uid` int(8) UNSIGNED NOT NULL,
+  `response` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `workshops_orgatool_users`
+  ADD PRIMARY KEY (`workshops_orgatool_users_id`);
+
+-- --------------------------------------------------------
 
 --
 -- Indizes für die Tabelle `blocked_workshop_slugs`

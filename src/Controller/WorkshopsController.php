@@ -207,6 +207,53 @@ class WorkshopsController extends AppController
         }
     }
 
+    public function organize($uid)
+    {
+        
+        if ($uid === null) {
+            throw new NotFoundException;
+        }
+        
+        $workshop = $this->Workshop->find('all', [
+            'conditions' => [
+                'Workshops.uid' => $uid,
+                'Workshops.status >= ' . APP_DELETED
+            ],
+            'contain' => [
+                'Metatags',
+                'Categories'
+            ]
+        ])->first();
+        
+        if (empty($workshop)) {
+            throw new NotFoundException;
+        }
+        $this->setIsCurrentlyUpdated($workshop->uid);
+        $this->set('metaTags', ['title' => 'Initiative organisieren']);
+        $this->_organize($workshop, true);
+    }
+
+    private function _organize($workshop, $isEditMode)
+    {
+        
+        $this->User = TableRegistry::getTableLocator()->get('Users');
+        $this->Workshop = TableRegistry::getTableLocator()->get('Workshops');
+        $this->Workshop_orgatool = TableRegistry::getTableLocator()->get('Workshops_orgatool');
+        $this->Workshop_orgatool_users = TableRegistry::getTableLocator()->get('Workshops_orgatool_users');
+        
+        $this->set('uid', $workshop->uid);
+        
+        $this->setReferer();
+               
+        $this->set('workshop', $workshop);
+        $this->set('isEditMode', $isEditMode);
+        $this->set('useDefaultValidation', $this->useDefaultValidation);
+        
+        if (!empty($errors)) {
+            $this->render('edit');
+        }
+    }
+
     public function ajaxGetAllWorkshopsForMap() {
         
         if (!$this->request->is('ajax')) {
@@ -961,6 +1008,7 @@ class WorkshopsController extends AppController
     public function verwalten()
     {
         $this->Workshop = TableRegistry::getTableLocator()->get('Workshops');
+
         // complicated is-user-orga-check no needed again because this page is only accessible for orga users
         if ($this->AppAuth->isAdmin()) {
             $workshops = $this->Workshop->getWorkshopsForAdmin(APP_DELETED);
@@ -982,7 +1030,6 @@ class WorkshopsController extends AppController
         $this->set('metaTags', $metaTags);
         
         $this->set('workshops', $workshops);
-        
     }
     
     public function ajaxGetWorkshopDetail($workshopUid) {

@@ -377,6 +377,9 @@ class MyHtmlHelper extends HtmlHelper {
     function urlEventNew($preselectedWorkshopUid = null) {
         return '/termine/add' . (!is_null($preselectedWorkshopUid) ? '/'.$preselectedWorkshopUid : '');
     }
+    function urlEventResponse($uid, $userUid, $response) {
+        return '/termine/response/' . $uid . '/' . $userId . '/' . $response;
+    }
     function urlInfoSheetNew($eventUid) {
         return '/laufzettel/add/' . $eventUid;
     }
@@ -446,6 +449,9 @@ class MyHtmlHelper extends HtmlHelper {
     }
     function urlWorkshopEdit($uid) {
         return '/initiativen/bearbeiten/'.$uid;
+    }
+    function urlWorkshopOrganize($uid) {
+        return '/initiativen/organisieren/'.$uid;
     }
     function urlWorkshopDelete($uid) {
         return '/initiativen/loeschen/'.$uid;

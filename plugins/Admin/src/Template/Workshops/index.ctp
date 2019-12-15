@@ -6,6 +6,7 @@ echo $this->element('list', [
       'heading' => Configure::read('AppConfig.initiativeNamePlural'),
       'newMethod' => ['url' => 'urlWorkshopNew'],
       'editMethod' => ['url' => 'urlWorkshopEdit'],
+      'organizeMethod' => ['url' => 'urlWorkshopOrganize'],
       'showMethod' => ['url' => 'urlWorkshopDetail'],
       'optionalSearchForms' => [
           ['options' => $users, 'value' => 'Workshops.owner', 'label' => 'Owner'],

@@ -46,6 +46,7 @@ $this->element('addScript', array('script' =>
                     <table class="list">
                       
                         <tr>
+							<th>Zusage</th>
                         	<th>Laufzettel</th>
                             <th>Id</th>
                             <th>Status</th>
@@ -73,6 +74,41 @@ $this->element('addScript', array('script' =>
             	        	?>
             	        	<tr class="<?php echo join(' ', $rowClass); ?>">
             	        	
+								<?php
+										echo '<td class="icon">';
+										// TODO! get response from $workshop_orgatool_users where event_uid == $event->uid and user_uid == $appAuth->getUserUid()
+										$response = 0;
+
+										if ($response == 0) {
+											echo '<i class="far fa-question fa-border" title="Unbestätigt"></i>';
+											echo $this->Html->link(
+        									       '<i class="far fa-check fa-border"></i>',
+            									   $this->Html->urlEventResponse($event->uid, 1, 1),
+        	       								   ['title' => 'Zusagen', 'escape' => false]
+												);
+											echo $this->Html->link(
+													'<i class="far fa-times fa-border"></i>',
+													$this->Html->urlEventResponse($event->uid, 1, 2),
+													   ['title' => 'Absagen', 'escape' => false]
+												 );
+    									} elseif ($response == 1) {
+											echo '<i class="far fa-check fa-border" title="Zugesagt"></i>';
+											echo $this->Html->link(
+        									       '<i class="far fa-times fa-border"></i>',
+            									   $this->Html->urlEventResponse($event->uid, 1, 2),
+        	       								   ['title' => 'Absagen', 'escape' => false]
+        									    );
+    									} elseif ($response == 2) {
+											echo '<i class="far fa-times fa-border" title="Abgesagt"></i>';
+        									echo $this->Html->link(
+        									       '<i class="far fa-check fa-border"></i>',
+            									   $this->Html->urlEventResponse($event->uid, 1, 1),
+        	       								   ['title' => 'Zusagen', 'escape' => false]
+        									    );
+    									}
+    									echo '</td>';
+    							?>
+
                     	        <?php
 									echo '<td>';
 									

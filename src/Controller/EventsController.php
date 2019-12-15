@@ -145,10 +145,18 @@ class EventsController extends AppController
                 }
             }
         }
+
+        $this->Workshop_orgatool = TableRegistry::getTableLocator()->get('Workshops_orgatool');
+        $this->Workshop_orgatool_users = TableRegistry::getTableLocator()->get('Workshops_orgatool_users');
+
         // workaround: if limit is not added, this warning appears
         // Warning (2): count(): Parameter must be an array or an object that implements Countable in [src/Template/Events/my_events.ctp, line 42]
         $workshops->limit(1000000);
         $this->set('workshops', $workshops);
+
+        // TODO! FILTERN!!
+        $this->set('workshops_orgatool', $this->Workshop_orgatool);
+        $this->set('workshops_orgatool_users', $this->Workshop_orgatool_users);
         
         $metaTags = [
             'title' => 'Meine Termine'
@@ -433,6 +441,44 @@ class EventsController extends AppController
         $this->render('edit');
         return $events;
         
+    }
+
+    public function response() {
+
+        $eventUid = (int)$this->request->getParam('pass')[0];
+        $userUid = (int) $this->request->getParam('pass')[1];
+        $reponse = (int) $this->request->getParam('pass')[2];
+
+        if ($eventUid <= 0 || $userUid <= 0) {
+            $this->AppFlash->setErrorMessage('Event oder User für Zusage nicht gesetzt');
+            throw new NotFoundException;
+        }
+
+        $event = $this->Event->find('all', [
+            'conditions' => [
+                'Events.uid' => $eventUid,
+                'Events.status >= ' . APP_DELETED
+            ],
+            'contain' => [
+                'Categories',
+                'Workshops'
+            ]
+        ])->first();
+
+        if (empty($event)) {
+            $this->AppFlash->setErrorMessage('Event oder User für Zusage nicht gefunden');
+            throw new NotFoundException;
+        }
+
+        $query = 'UPDATE workshops_orgatool_users SET response :reponse WHERE event_uid = :event_uid AND user_uid = :user_uid;';
+        $params = [
+            'response' => $response,
+            'event_uid' => $eventUid,
+            'user_uid' => $user_uid
+        ];
+        $this->connection->execute($query, $params);
+        $this->AppFlash->setFlashMessage('Zusage erfolgreich geändert.');
+        $this->redirect($this->request->referer());
     }
     
     public function ajaxGetAllEventsForMap()

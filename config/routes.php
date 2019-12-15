@@ -67,6 +67,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/meine-termine', ['controller'=>'events', 'action'=>'myEvents']);
     $routes->connect('/initiativen/anlegen', ['controller'=>'workshops', 'action'=>'add']);
     $routes->connect('/initiativen/bearbeiten/*', ['controller'=>'workshops', 'action'=>'edit']);
+    $routes->connect('/initiativen/organisieren/*', ['controller'=>'workshops', 'action'=>'organize']);
     $routes->connect('/initiativen/loeschen/*', ['controller'=>'workshops', 'action'=>'delete']);
     
     $routes->connect('/orte/*', ['controller'=>'workshops', 'action'=>'all']);
@@ -99,6 +100,7 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/termine/duplicate/*', ['controller'=>'events', 'action'=>'duplicate']);
     $routes->connect('/termine/add/*', ['controller'=>'events', 'action'=>'add']);
     $routes->connect('/termine/delete/*', ['controller'=>'events', 'action'=>'delete']);
+    $routes->connect('/termine/response/*', ['controller'=>'events', 'action'=>'response']);
     
     $routes->connect('/rss-termine', ['controller' => 'events', 'action' => 'feed']);
     
