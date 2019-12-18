@@ -67,8 +67,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/meine-termine', ['controller'=>'events', 'action'=>'myEvents']);
     $routes->connect('/initiativen/anlegen', ['controller'=>'workshops', 'action'=>'add']);
     $routes->connect('/initiativen/bearbeiten/*', ['controller'=>'workshops', 'action'=>'edit']);
-    $routes->connect('/initiativen/organisieren/*', ['controller'=>'workshops', 'action'=>'organize']);
     $routes->connect('/initiativen/loeschen/*', ['controller'=>'workshops', 'action'=>'delete']);
+    $routes->connect('/initiativen/organisieren/*', ['controller'=>'orgatool', 'action'=>'organize']);
     
     $routes->connect('/orte/*', ['controller'=>'workshops', 'action'=>'all']);
     $routes->connect('/orte', ['controller'=>'workshops', 'action'=>'all']);

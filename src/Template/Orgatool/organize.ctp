@@ -1,11 +1,11 @@
 <?php
 use Cake\Core\Configure;
 
-    if ($isEditMode) {
-        $this->element('addScript', array('script' =>
-            JS_NAMESPACE.".Helper.doCurrentlyUpdatedActions(".$isCurrentlyUpdated.");"
-        ));
-    }
+    // if ($isEditMode) {
+    //     $this->element('addScript', array('script' =>
+    //         JS_NAMESPACE.".Helper.doCurrentlyUpdatedActions(".$isCurrentlyUpdated.");"
+    //     ));
+    // }
     if ($this->request->getSession()->read('isMobile')) {
         $this->element('addScript', ['script' =>
             JS_NAMESPACE.".MobileFrontend.putSaveAndCancelButtonToEndOfForm();
@@ -34,11 +34,11 @@ use Cake\Core\Configure;
            <?php
             echo "Name der Initiative: ".$workshop->name;
 
-            echo $this->Form->control('Workshops_orgatool.enabled', ['type' => 'checkbox', 'label' => 'Helfer automatisch einladen?']).'<br />';
+            echo $this->Form->control('Orgatool.enabled', ['type' => 'checkbox', 'label' => 'Helfer automatisch einladen?']).'<br />';
             
-            echo $this->Form->control('Workshops_orgatool.helper_invitation_days', array('label' => 'Tage vor dem nächsten Event einladen')).'<br />';
+            echo $this->Form->control('Orgatool.helper_invitation_days', array('label' => 'Tage vor dem nächsten Event einladen')).'<br />';
 
-            echo $this->Form->control('Workshops_orgatool.helper_reminder_days', array('label' => 'Tage vor dem nächsten Event erinnern')).'<br />';
+            echo $this->Form->control('Orgatool.helper_reminder_days', array('label' => 'Tage vor dem nächsten Event erinnern')).'<br />';
             
             if (!$useDefaultValidation) {
                 echo $this->element('metatagsFormfields', ['entity' => 'Workshops']);
@@ -52,10 +52,10 @@ use Cake\Core\Configure;
     <div class="ckeditor-edit">
       <?php
         echo $this->element('ckeditorEdit', [
-            'value' => $Workshops_orgatool->helper_invitation_text,
-            'name' => 'Workshops_orgatool.helper_invitation_text',
-            'uid' => $workshop->uid,
-            'objectType' => 'workshops'
+            'value' => $orgatool->helper_invitation_text,
+            'name' => 'Orgatool.helper_invitation_text',
+            'uid' => $orgatool->uid,
+            'objectType' => 'orgatool'
            ]);
       ?>
     </div>
@@ -63,10 +63,10 @@ use Cake\Core\Configure;
     <div class="ckeditor-edit">
     <?php
       echo $this->element('ckeditorEdit', [
-          'value' => $Workshops_orgatool->helper_reminder_text,
-          'name' => 'Workshops_orgatool.helper_reminder_text',
-          'uid' => $workshop->uid,
-          'objectType' => 'workshops'
+          'value' => $orgatool->helper_reminder_text,
+          'name' => 'Orgatool.helper_reminder_text',
+          'uid' => $orgatool->uid,
+          'objectType' => 'orgatool'
          ]);
       ?>
     </div>

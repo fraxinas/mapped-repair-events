@@ -2441,39 +2441,38 @@ CREATE TABLE `workshops_categories` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `workshops_orgatool`
+-- Tabellenstruktur für Tabelle `orgatool`
 --
 
-DROP TABLE IF EXISTS `workshops_orgatool`;
-CREATE TABLE `workshops_orgatool` (
+DROP TABLE IF EXISTS `orgatool`;
+CREATE TABLE `orgatool` (
   `workshop_uid` int(8) UNSIGNED NOT NULL,
-  `workshops_orgatool_id` int(8) UNSIGNED NOT NULL,
-  `enabled` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
+  `status` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   `helper_invitation_days` smallint(6) NOT NULL DEFAULT '14',
   `helper_reminder_days` smallint(6) NOT NULL DEFAULT '5',
   `helper_invitation_text` text NOT NULL,
   `helper_reminder_text` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-ALTER TABLE `workshops_orgatool`
-  ADD PRIMARY KEY (`workshops_orgatool_id`);
+ALTER TABLE `orgatool`
+  ADD PRIMARY KEY (`workshop_uid`);
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `workshops_orgatool_users`
+-- Tabellenstruktur für Tabelle `orgatool_responses`
 --
 
-DROP TABLE IF EXISTS `workshops_orgatool_users`;
-CREATE TABLE `workshops_orgatool_users` (
-  `workshops_orgatool_id` int(8) UNSIGNED NOT NULL,
-  `workshops_orgatool_users_id` int(8) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `orgatool_responses`;
+CREATE TABLE `orgatool_responses` (
+  `_id` int(8) NOT NULL,
+  `workshop_uid` int(8) UNSIGNED NOT NULL,
   `user_uid` int(8) NOT NULL,
   `event_uid` int(8) UNSIGNED NOT NULL,
   `response` tinyint(3) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-ALTER TABLE `workshops_orgatool_users`
-  ADD PRIMARY KEY (`workshops_orgatool_users_id`);
+ALTER TABLE `orgatool_responses`
+  ADD PRIMARY KEY (`_id`);
 
 -- --------------------------------------------------------
 
